@@ -1,0 +1,72 @@
+{% extends 'admin/base_generic.html' %}
+
+{% block content %}
+<h1 class="text-center my-4">Category List</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<section class="section">
+    <div class="container">
+        <!-- Bootstrap Grid with 3 Cards per Row and Gaps -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for category in categories %}
+            <div class="col">
+                <!-- Card for each Category -->
+                <div class="card h-100 shadow-sm">
+                    <!-- Placeholder Image -->
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="card-img-top">
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <p class="card-text">
+                            <strong>Description:</strong> {{ category.description }} <br>
+                            <strong>Price Per Night:</strong> ₹{{ category.price_per_night }} <br>
+                            <strong>Rooms:</strong> {{ category.number_of_rooms }} <br>
+                            <strong>Availability:</strong>
+                            {% if category.is_available %} Yes {% else %} No {% endif %}
+                        </p>
+
+                        <!-- Display Seasonal Pricing if exists -->
+                        {% if category.seasonalpricing_set.exists %}
+                        <h6 class="mt-3">Seasonal Pricing</h6>
+                        <ul>
+                            {% for pricing in category.seasonalpricing_set.all %}
+                            <li><strong>From:</strong> {{ pricing.start_date }} <strong>To:</strong> {{ pricing.end_date
+                                }}
+                                <strong>Price:</strong> ${{ pricing.price_per_night }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+
+                    <!-- Card Footer with Action Buttons -->
+                    <div class="card-footer d-flex justify-content-around">
+                        <a href="{% url 'seasonalpricing_add' category.pk %}" class="btn btn-primary btn-sm">
+                            Add Pricing
+                        </a>
+                        <a href="{% url 'category_edit' category.pk %}" class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+                        <a href="{% url 'category_delete' category.pk %}" class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback if no categories exist -->
+            <div class="col-12 text-center">
+                <p>No categories available at the moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Add New Category Button -->
+<div class="text-center my-4">
+    <a href="{% url 'category_add' %}" class="btn btn-success">Add New Category</a>
+</div>
+
+{% endblock %}

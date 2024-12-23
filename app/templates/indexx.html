@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .button-container a {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            width: 48%;
+            display: block;
+        }
+
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Welcome to Our Website</h2>
+
+        <!-- Welcome Text or Introduction -->
+        <p style="text-align: center;">Please choose an option below to either log in or register as a new user.</p>
+
+        <!-- Login and Registration Links -->
+        <div class="button-container">
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'admin_register' %}">Admin Register</a>
+            <a href="{% url 'customer_register' %}">Login Register</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
